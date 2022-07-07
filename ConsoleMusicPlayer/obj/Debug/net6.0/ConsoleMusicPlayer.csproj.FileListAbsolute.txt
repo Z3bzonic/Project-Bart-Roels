@@ -1,0 +1,17 @@
+Z:\repos\Cursus\Project Bart Roels\ConsoleMusicPlayer\bin\Debug\net6.0\ConsoleMusicPlayer.exe
+Z:\repos\Cursus\Project Bart Roels\ConsoleMusicPlayer\bin\Debug\net6.0\ConsoleMusicPlayer.deps.json
+Z:\repos\Cursus\Project Bart Roels\ConsoleMusicPlayer\bin\Debug\net6.0\ConsoleMusicPlayer.runtimeconfig.json
+Z:\repos\Cursus\Project Bart Roels\ConsoleMusicPlayer\bin\Debug\net6.0\ConsoleMusicPlayer.dll
+Z:\repos\Cursus\Project Bart Roels\ConsoleMusicPlayer\bin\Debug\net6.0\ConsoleMusicPlayer.pdb
+Z:\repos\Cursus\Project Bart Roels\ConsoleMusicPlayer\obj\Debug\net6.0\ConsoleMusicPlayer.csproj.AssemblyReference.cache
+Z:\repos\Cursus\Project Bart Roels\ConsoleMusicPlayer\obj\Debug\net6.0\Interop.WMPLib.dll
+Z:\repos\Cursus\Project Bart Roels\ConsoleMusicPlayer\obj\Debug\net6.0\ConsoleMusicPlayer.csproj.ResolveComReference.cache
+Z:\repos\Cursus\Project Bart Roels\ConsoleMusicPlayer\obj\Debug\net6.0\ConsoleMusicPlayer.GeneratedMSBuildEditorConfig.editorconfig
+Z:\repos\Cursus\Project Bart Roels\ConsoleMusicPlayer\obj\Debug\net6.0\ConsoleMusicPlayer.AssemblyInfoInputs.cache
+Z:\repos\Cursus\Project Bart Roels\ConsoleMusicPlayer\obj\Debug\net6.0\ConsoleMusicPlayer.AssemblyInfo.cs
+Z:\repos\Cursus\Project Bart Roels\ConsoleMusicPlayer\obj\Debug\net6.0\ConsoleMusicPlayer.csproj.CoreCompileInputs.cache
+Z:\repos\Cursus\Project Bart Roels\ConsoleMusicPlayer\obj\Debug\net6.0\ConsoleMusicPlayer.dll
+Z:\repos\Cursus\Project Bart Roels\ConsoleMusicPlayer\obj\Debug\net6.0\refint\ConsoleMusicPlayer.dll
+Z:\repos\Cursus\Project Bart Roels\ConsoleMusicPlayer\obj\Debug\net6.0\ConsoleMusicPlayer.pdb
+Z:\repos\Cursus\Project Bart Roels\ConsoleMusicPlayer\obj\Debug\net6.0\ConsoleMusicPlayer.genruntimeconfig.cache
+Z:\repos\Cursus\Project Bart Roels\ConsoleMusicPlayer\obj\Debug\net6.0\ref\ConsoleMusicPlayer.dll
