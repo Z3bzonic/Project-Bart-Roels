@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "4g0m7fR7zf5bBsPN7gRtEQPHVKLoXVQxlnmFr2NmznXINVx3FpW9gMAX19rdTXdEYROtlJpmFYiweKrGtV5Hgg==",
+  "dgSpecHash": "6C/oW3yoD4pOJnyJa7zIcE+VoJFw/E3uY6Y5qO47E5+HDgrY0EyZkm1fduKE8jqEMTwy6ph8DdqY+2LQUUk/HQ==",
   "success": true,
   "projectFilePath": "Z:\\repos\\Cursus\\Project Bart Roels\\ConsoleMusicPlayer\\ConsoleMusicPlayer.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Zentop\\.nuget\\packages\\id3\\0.6.0\\id3.0.6.0.nupkg.sha512",
+    "C:\\Users\\Zentop\\.nuget\\packages\\jetbrains.annotations\\2018.3.0\\jetbrains.annotations.2018.3.0.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -15,34 +15,90 @@
         public string ErrorNoSong()
         {
             string errorNoSong = @"
-█▀▀ █▀█ █▀█ █▀█ █▀█ ▀   █▄░█ █▀█   █▀ █▀█ █▄░█ █▀▀   █▀▀ █▀█ █░█ █▄░█ █▀▄
-██▄ █▀▄ █▀▄ █▄█ █▀▄ ▄   █░▀█ █▄█   ▄█ █▄█ █░▀█ █▄█   █▀░ █▄█ █▄█ █░▀█ █▄▀";
+ █▄░█ █▀█   █▀ █▀█ █▄░█ █▀▀   █▀▀ █▀█ █░█ █▄░█ █▀▄
+ █░▀█ █▄█   ▄█ █▄█ █░▀█ █▄█   █▀░ █▄█ █▄█ █░▀█ █▄▀";
 
             return errorNoSong;
         }
 
-        public string[] MenuBlock()
+        public List<string> MenuBlock()
         {
-            string[] menuBlock =
-{" play/pause(p)  stop(s)  load(l)  mute(m)   next(n)    exit(x)    volume(v)",
- "██▀██████▀█▀██████████████████████▀▀████████▀██▀██████▀▀████▀▀█████████████████",
- "██    ███ █ ████      █████▀  ▀████  ███████  █  ███████ ██ █████████▄▄▄▄██████",
- "██      █ █ ████      █████    █████  ██████  |   ██████ ▀▀ ████████▄▄▄▄███████",
- "██    ███ █ ████      ████▄▄▄▄▄▄█████  █████  █  ███████ ██ ███████▄▄▄▄████████",
- "██▄██████▄█▄████▄▄▄▄▄▄████▄▄▄▄▄▄██████▄▄████▄██▄██████▄▄████▄▄████▄▄▄▄█████████"};
+            List<string> menuBlock = new List<string>();
+            menuBlock.Add(" (P)lay/|| ");
+            menuBlock.Add("▀██████▀█▀█");
+            menuBlock.Add("    ███ █ █");
+            menuBlock.Add("      █ █ █");
+            menuBlock.Add("    ███ █ █");
+            menuBlock.Add("▄██████▄█▄█");
+
+            menuBlock.Add("    (S)top ");
+            menuBlock.Add("███████████");
+            menuBlock.Add("██      ███");
+            menuBlock.Add("██      ███");
+            menuBlock.Add("██      ███");
+            menuBlock.Add("██▄▄▄▄▄▄███");
+
+            menuBlock.Add("    (L)oad ");
+            menuBlock.Add("███████████");
+            menuBlock.Add("███▀  ▀████");
+            menuBlock.Add("███    ████");
+            menuBlock.Add("██▄▄▄▄▄▄███");
+            menuBlock.Add("██▄▄▄▄▄▄███");
+
+            menuBlock.Add("    (M)ute ");
+            menuBlock.Add("██▀▀███████");
+            menuBlock.Add("███  ██████");
+            menuBlock.Add("████  █████");
+            menuBlock.Add("█████  ████");
+            menuBlock.Add("██████▄▄███");
+
+            //menuBlock.Add("    (N)ext ");
+            //menuBlock.Add("██▀██▀█████");
+            //menuBlock.Add("██  █  ████");
+            //menuBlock.Add("██  |   ███");
+            //menuBlock.Add("██  █  ████");
+            //menuBlock.Add("██▄██▄█████");
+
+            menuBlock.Add("    E(x)it ");
+            menuBlock.Add("█▀▀████▀▀██");
+            menuBlock.Add("███ ██ ████");
+            menuBlock.Add("███ ▀▀ ████");
+            menuBlock.Add("███ ██ ████");
+            menuBlock.Add("█▄▄████▄▄██");
+
+            menuBlock.Add("  (V)olume ");
+            menuBlock.Add("███████████");
+            menuBlock.Add("█████▄▄▄▄██");
+            menuBlock.Add("████▄▄▄▄███");
+            menuBlock.Add("███▄▄▄▄████");
+            menuBlock.Add("██▄▄▄▄█████");
+
+            menuBlock.Add("From Lis(t)");
+            menuBlock.Add("███████████");
+            menuBlock.Add("██  ███████");
+            menuBlock.Add("██  ███████");
+            menuBlock.Add("██  ███████");
+            menuBlock.Add("██▄▄▄▄▄▄▄██");
+
+            menuBlock.Add("T(o)p secret");
+            menuBlock.Add("███████████");
+            menuBlock.Add("██  ███  ██");
+            menuBlock.Add("███████████");
+            menuBlock.Add("██       ██");
+            menuBlock.Add("██▄▄▄▄▄▄▄██");
             return menuBlock;
         }
 
-        public string VolumeBar() 
+        public string VolumeBar()
         {
             string volumeBar = "▄";
             return volumeBar;
         }
 
-        public string VolumePlaceHolder() 
+        public string VolumePlaceHolder()
         {
-            string placeHolder = "    ==▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀°°";
-            return placeHolder;  
+            string placeHolder = "▀";
+            return placeHolder;
         }
     }
 }
