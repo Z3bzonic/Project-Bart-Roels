@@ -11,7 +11,7 @@ namespace ConsoleMusicPlayer.Enums
         TitleLeftLimiter = 25,
         TitleHeight = 4,
         OptionsVerticalPlacement = 20,
-        OptionsCount = 8,
+        OptionsCount = 7,
         OptionsLeftLimiter = 3,
         OptionsHeight = 6,
         MusicBackDropHeight=7,
