@@ -262,6 +262,7 @@ namespace ConsoleMusicPlayer.Backend
                         toggleMutePlayer = false;
                         toggleStatePlayer = false;
                     }
+                    _messages.ClearLoadMessage();
                     _messages.RenderAsciiMenu();
                     break;
 
