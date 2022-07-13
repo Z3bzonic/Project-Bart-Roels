@@ -62,22 +62,11 @@ namespace ConsoleMusicPlayer.Frontend
 
         private void RenderMetaBackground(int length)
         {
-            _colorContrast.ColoringFullConsole();
+            ClearDisplayMetaData();
             int top = 8;
-            for (int i = 0; i < 8; i++)
-            {
-                Console.Write($"{new string(' ', 52)}");
-                Console.SetCursorPosition(3, top);
-                top += 1;
-            }
-            top = 8;
-            if (length > 39)
-            {
-                length = 39;
-            }
+            length = length > 39 ? 39 : length;
             _position.MetadataBackdropPosition();
             _colorContrast.ColoringBackdrops();
-
             for (int i = 0; i < 8; i++)
             {
                 Console.Write($"{new string(' ', length + 13)}");
@@ -168,6 +157,13 @@ namespace ConsoleMusicPlayer.Frontend
 
         // ++++++++++ PROMPTS ++++++++++++++
 
+        public void DisplayLoadingMetaData()
+        {
+            _colorContrast.ColoringBackdrops();
+            _position.DisplayLoadingMetaPosition();
+            Console.Write("---===LOADING METADATA===---");
+        }
+
         public void DisplaySongSelect()
         {
             _colorContrast.ColoringInformative();
@@ -228,16 +224,14 @@ namespace ConsoleMusicPlayer.Frontend
             int max = FindMaxItemLenght(metadata);
             RenderMetaBackground(max);
             _position.MetaDataPosition();
+            _colorContrast.ColoringDisplay();
             int top = 9;
             int left = 5;
             for (int i = 0; i < metadata.Length; i += 2)
             {
                 int lengthParam = metadata[i].Length;
                 int lengthValeu = metadata[i + 1].Length;
-                if (lengthValeu > 38)
-                {
-                    lengthValeu = 38;
-                }
+                lengthValeu = lengthValeu > 38 ? 38 : lengthValeu;
                 Console.SetCursorPosition(left, top);
 
                 if (!string.IsNullOrWhiteSpace(metadata[i + 1]))
@@ -294,7 +288,6 @@ namespace ConsoleMusicPlayer.Frontend
         public void DisplayMenuChoice()
         {
             _colorContrast.ColoringMenu();
-            char choice = ' ';
             Console.SetCursorPosition(0, 18);
             Console.Write("[ ]");
             _colorContrast.ColoringFullConsole();
@@ -355,17 +348,18 @@ namespace ConsoleMusicPlayer.Frontend
         }
 
         // ++++++++++ CLEAR INFODISPLAY ++++++++++++++
-        public void ClearDisplayMetaData() 
+        public void ClearDisplayMetaData()
         {
             _colorContrast.ColoringFullConsole();
             int top = 8;
             for (int i = 0; i < 8; i++)
             {
-                Console.Write($"{new string(' ', 52)}");
                 Console.SetCursorPosition(3, top);
+                Console.Write($"{new string(' ', 52)}");
                 top += 1;
             }
         }
+
         private void ClearPreviousBar(int volume, int top, int left)
         {
             if (previousVolume > volume)
@@ -432,7 +426,6 @@ namespace ConsoleMusicPlayer.Frontend
                 _colorContrast.ColoringFullConsole();
                 Console.Write(' ');
                 _colorContrast.ColoringDisplay();
-
                 Console.Write(new string(' ', 40));
                 Console.SetCursorPosition(leftCursor, topCursor + i);
             }
@@ -441,6 +434,23 @@ namespace ConsoleMusicPlayer.Frontend
             Console.Write(new string(' ', 6));
             _colorContrast.ColoringDisplay();
             Console.Write(new string(' ', 41));
+        }
+
+        public void ClearSongSelectOptions()
+        {
+            _colorContrast.ColoringFullConsole();
+            int topCursor = (int)RenderControls.MusicFolderFetchHeight;
+            int leftCursor = (int)RenderControls.MusicFolderFetchLeftLimiter - 2;
+            for (int i = 0; i < (int)RenderControls.NumberOfSongsInDisplay; i++)
+            {
+                Console.SetCursorPosition(leftCursor, topCursor);
+                Console.Write(new string(' ', 1));
+                topCursor += 1;
+            }
+            Console.SetCursorPosition(leftCursor - 5, topCursor - 1);
+            Console.Write(new string(' ', 6));
+            _colorContrast.ColoringBackdrops();
+            Console.Write(new string(' ', 42));
         }
     }
 }

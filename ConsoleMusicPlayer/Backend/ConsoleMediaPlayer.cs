@@ -37,7 +37,7 @@ namespace ConsoleMusicPlayer.Backend
             }
         }
 
-        private void TogglePlay() 
+        private void TogglePlay()
         {
             _player.controls.play();
             toggleStatePlayer = true;
@@ -92,7 +92,7 @@ namespace ConsoleMusicPlayer.Backend
             }
         }
 
-        private void ToggleMuteOn() 
+        private void ToggleMuteOn()
         {
             _player.settings.mute = true;
             toggleMutePlayer = true;
@@ -111,13 +111,10 @@ namespace ConsoleMusicPlayer.Backend
             }
             _messages.RenderAsciiMenu();
         }
+
         private void RetrieveLoadData(string listChoice = "")
         {
             string fetchData = _fileFunctions.LoadSong(listChoice);
-            while (fetchData == "y")
-            {
-                fetchData = _fileFunctions.LoadSong();
-            }
             if (fetchData != "")
             {
                 getSong = fetchData;
@@ -135,13 +132,10 @@ namespace ConsoleMusicPlayer.Backend
 
         private void RetrieveMetaData(IWMPMedia media)
         {
-            _player.controls.play();
-            _player.settings.volume = 0;
-            Thread.Sleep(100);          
-            _player.controls.pause();
             string[] songAttributes = new string[10];
             if (_player.currentMedia != null)
             {
+                _messages.DisplayLoadingMetaData();
                 Thread.Sleep(1000);
                 songAttributes[0] = "Title   :";
                 songAttributes[1] = $" {media.getItemInfo("Title")}";
@@ -157,7 +151,6 @@ namespace ConsoleMusicPlayer.Backend
             }
         }
 
-
         private void SongPicker()
         {
             string[] songs = _fileFunctions.GetMusicFromFolder();
@@ -165,9 +158,9 @@ namespace ConsoleMusicPlayer.Backend
             Console.SetCursorPosition(84, 14);
             int choice = -1;
             bool testChoice = int.TryParse(Console.ReadLine(), out choice);
-            if (testChoice == false) 
-            { 
-                choice -= 1; 
+            if (testChoice == false)
+            {
+                choice -= 1;
             }
 
             string option = "";
@@ -178,36 +171,42 @@ namespace ConsoleMusicPlayer.Backend
                     break;
 
                 case 1:
+                    _messages.ClearSongSelectOptions();
                     _messages.ClearDisplayMetaData();
-                    option = songs[0 + songListCycle*5 - 5];
+                    option = songs[0 + songListCycle * 5 - 5];
                     RetrieveLoadData(option);
                     break;
 
                 case 2:
+                    _messages.ClearSongSelectOptions();
                     _messages.ClearDisplayMetaData();
-                    option = songs[1 + songListCycle*5 - 5];
+                    option = songs[1 + songListCycle * 5 - 5];
                     RetrieveLoadData(option);
                     break;
 
                 case 3:
+                    _messages.ClearSongSelectOptions();
                     _messages.ClearDisplayMetaData();
-                    option = songs[2 + songListCycle*5 - 5];
+                    option = songs[2 + songListCycle * 5 - 5];
                     RetrieveLoadData(option);
                     break;
 
                 case 4:
+                    _messages.ClearSongSelectOptions();
                     _messages.ClearDisplayMetaData();
-                    option = songs[3 + songListCycle*5 - 5];
+                    option = songs[3 + songListCycle * 5 - 5];
                     RetrieveLoadData(option);
                     break;
 
                 case 5:
+                    _messages.ClearSongSelectOptions();
                     _messages.ClearDisplayMetaData();
-                    option = songs[4 + songListCycle*5 - 5];
+                    option = songs[4 + songListCycle * 5 - 5];
                     RetrieveLoadData(option);
                     break;
 
                 default:
+                    _messages.ClearSongSelectOptions();
                     _messages.ClearSongSelectMenu();
                     break;
             }
@@ -215,20 +214,17 @@ namespace ConsoleMusicPlayer.Backend
 
         public void PrepareSongList(string[] getSongsFromMusicFolder)
         {
-
             int currentIndex = songListCycle * 5;
             int songListLength = getSongsFromMusicFolder.Length;
-            if (Math.Ceiling(songListLength / 5.0) <= songListCycle+1)
+            if (Math.Ceiling(songListLength / 5.0) <= songListCycle + 1)
             {
-
                 songListCycle = 0;
                 currentIndex = songListCycle * 5;
             }
-                songListCycle += 1;
+            songListCycle += 1;
             int itemsToRender = songListLength - songListCycle * 5 > 5 ? 5 : (songListLength - songListCycle * 5) % 5;
             int presentMusicFolderLength = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic).Length;
             _messages.RenderSongList(getSongsFromMusicFolder, itemsToRender, presentMusicFolderLength, currentIndex);
-
         }
 
         public void ChoicePatchTrough(int choice)
@@ -238,9 +234,9 @@ namespace ConsoleMusicPlayer.Backend
                 case (int)UserOptions.Play_Pause:
                     if (pathPresent == true)
                     {
-                        RetrieveMetaData(_player.currentMedia);
                         SetInitialVolume();
                         TogglePlayPause();
+                        RetrieveMetaData(_player.currentMedia);
                     }
                     else
                     {
@@ -295,6 +291,7 @@ namespace ConsoleMusicPlayer.Backend
 
                 case (int)UserOptions.Exit:
                     return;
+
                 default:
                     break;
             }

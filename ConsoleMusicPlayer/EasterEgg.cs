@@ -37,13 +37,13 @@
                     DrawFromCenterToRightPartA();
                 }
             }
-
         }
+
         private void DrawFromCenterToLeftPartA()
         {
             int vertical = RENDERARRAY_Y / 2;
             int horizontal = RenderArray_X / 2;
-            for (int y = 0; y < ((RenderArray_X/2)/offset)/2; y++)
+            for (int y = 0; y < ((RenderArray_X / 2) / offset) / 2; y++)
             {
                 for (int i = 0; i < offset; i++)
                 {
@@ -63,6 +63,7 @@
                 }
             }
         }
+
         private void DrawFromCenterToLeftPartB()
         {
             int vertical = RENDERARRAY_Y / 2;
@@ -87,6 +88,7 @@
                 }
             }
         }
+
         private void DrawFromCenterToRightPartA()
         {
             int vertical = RENDERARRAY_Y / 2;
@@ -111,6 +113,7 @@
                 }
             }
         }
+
         private void DrawFromCenterToRightPartB()
         {
             int vertical = RENDERARRAY_Y / 2;
@@ -135,6 +138,7 @@
                 }
             }
         }
+
         private void SetCursorPosition(int hor, int ver)
         {
             Console.SetCursorPosition(hor, ver);

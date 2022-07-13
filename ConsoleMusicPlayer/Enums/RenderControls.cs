@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConsoleMusicPlayer.Enums
+﻿namespace ConsoleMusicPlayer.Enums
 {
     internal enum RenderControls
     {
@@ -14,9 +8,9 @@ namespace ConsoleMusicPlayer.Enums
         OptionsCount = 7,
         OptionsLeftLimiter = 3,
         OptionsHeight = 6,
-        MusicBackDropHeight=7,
-        MusicBackDropWidth=43,
-        MusicBackDropLeftLimiter=65,
+        MusicBackDropHeight = 7,
+        MusicBackDropWidth = 43,
+        MusicBackDropLeftLimiter = 65,
         MusicFolderFetchLeftLimiter = 66,
         MusicFolderFetchHeight = 9,
         VolumePlaceHolderLeftLimiter = 0,

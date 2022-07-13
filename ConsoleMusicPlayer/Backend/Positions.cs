@@ -76,5 +76,10 @@
         {
             Console.SetCursorPosition(64, 9);
         }
+
+        public void DisplayLoadingMetaPosition()
+        {
+            Console.SetCursorPosition(3, 12);
+        }
     }
 }

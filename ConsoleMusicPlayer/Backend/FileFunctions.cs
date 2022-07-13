@@ -21,14 +21,7 @@ namespace ConsoleMusicPlayer.Backend
                 string fullPath = musicFolder + songName;
                 FileInfo fileInfo = new FileInfo(fullPath);
                 bool checkPath = fileInfo.Exists;
-                if (checkPath)
-                {
-                    return fullPath;
-                }
-                else
-                {
-                    LoadSong();
-                }
+                fullPath = checkPath ? fullPath : LoadSong();
             }
             return loadedSong;
         }

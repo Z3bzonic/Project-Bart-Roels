@@ -30,11 +30,13 @@
             Console.BackgroundColor = ConsoleColor.Gray;
             Console.ForegroundColor = ConsoleColor.Black;
         }
+
         public void ColoringToggleButton()
         {
             Console.BackgroundColor = ConsoleColor.DarkCyan;
             Console.ForegroundColor = ConsoleColor.DarkYellow;
         }
+
         public void ColoringVolumeBar()
         {
             Console.BackgroundColor = ConsoleColor.White;
@@ -55,7 +57,7 @@
 
         public void ColoringBackdrops()
         {
-            Console.BackgroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.DarkGray;
             Console.ForegroundColor = ConsoleColor.Cyan;
         }
     }

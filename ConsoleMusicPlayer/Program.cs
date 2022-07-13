@@ -14,7 +14,7 @@ FileFunctions fileFunctions = new FileFunctions(messages);
 ConsoleMediaPlayer consoleMediaPlayer = new ConsoleMediaPlayer(player, messages, fileFunctions);
 
 int choice = 0;
-bool choiceTest=false;
+bool choiceTest = false;
 messages.RenderTitle();
 messages.RenderAsciiMenu();
 consoleMediaPlayer.PrepareSongList(fileFunctions.GetMusicFromFolder());
