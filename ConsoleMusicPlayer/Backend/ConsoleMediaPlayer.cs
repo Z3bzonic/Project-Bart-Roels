@@ -8,25 +8,21 @@ namespace ConsoleMusicPlayer.Backend
         private WindowsMediaPlayer _player;
         private Messages _messages;
         private FileFunctions _fileFunctions;
-        private bool toggleStatePlayer = false;
-        private bool toggleMutePlayer = false;
-        public bool pathPresent = false;
-        public int volume = 50;
-        public string getSong = "";
-        private int songListCycle = 0;
+        private StatesDTO _stationsDTO;
 
-        public ConsoleMediaPlayer(WindowsMediaPlayer player, Messages messages, FileFunctions fileFunctions)
+        public ConsoleMediaPlayer(WindowsMediaPlayer player, Messages messages, FileFunctions fileFunctions, StatesDTO stationsDTO)
         {
             _player = player;
             _messages = messages;
             _fileFunctions = fileFunctions;
+            _stationsDTO = stationsDTO;
         }
 
         private void TogglePlayPause()
         {
-            if (getSong != "")
+            if (_stationsDTO.getSong != "")
             {
-                if (toggleStatePlayer == false)
+                if (_stationsDTO.toggleStatePlayer == false)
                 {
                     TogglePlay();
                 }
@@ -40,17 +36,17 @@ namespace ConsoleMusicPlayer.Backend
         private void TogglePlay()
         {
             _player.controls.play();
-            toggleStatePlayer = true;
+            _stationsDTO.toggleStatePlayer = true;
             _messages.ClearPauseMessage();
-            _messages.DisplayNowPlaying(getSong);
+            _messages.DisplayNowPlaying(_stationsDTO.getSong);
             _messages.RenderAsciiMenu(0);
         }
 
         private void TogglePause()
         {
             _player.controls.pause();
-            toggleStatePlayer = false;
-            _messages.DisplayNowPaused(getSong);
+            _stationsDTO.toggleStatePlayer = false;
+            _messages.DisplayNowPaused(_stationsDTO.getSong);
             _messages.RenderAsciiMenu(-1);
         }
 
@@ -61,28 +57,28 @@ namespace ConsoleMusicPlayer.Backend
             _messages.RenderAsciiMenu(1);
             Thread.Sleep(300);
             _messages.RenderAsciiMenu();
-            getSong = "";
+            _stationsDTO.getSong = "";
         }
 
         private void SetInitialVolume()
         {
-            _messages.RenderVolumeBar(volume);
-            _player.settings.volume = volume;
+            _messages.RenderVolumeBar(_stationsDTO.volume);
+            _player.settings.volume = _stationsDTO.volume;
         }
 
         private void ChangeVolume()
         {
             _messages.RenderAsciiMenu((int)Enums.RenderControls.OptionsCount - 2);
-            volume = _messages.DisplayVolumeMenu();
-            _player.settings.volume = volume;
-            _messages.RenderVolumeBar(volume);
+            _stationsDTO.volume = _messages.DisplayVolumeMenu();
+            _player.settings.volume = _stationsDTO.volume;
+            _messages.RenderVolumeBar(_stationsDTO.volume);
             _messages.ClearVolumeMenu();
             _messages.RenderAsciiMenu();
         }
 
         private void MutePlayer()
         {
-            if (toggleMutePlayer == false)
+            if (_stationsDTO.toggleMutePlayer == false)
             {
                 ToggleMuteOn();
             }
@@ -95,7 +91,7 @@ namespace ConsoleMusicPlayer.Backend
         private void ToggleMuteOn()
         {
             _player.settings.mute = true;
-            toggleMutePlayer = true;
+            _stationsDTO.toggleMutePlayer = true;
             _messages.DisplayNowMuted();
             _messages.RenderAsciiMenu((int)Enums.RenderControls.OptionsCount - 3);
         }
@@ -103,11 +99,11 @@ namespace ConsoleMusicPlayer.Backend
         private void ToggleMuteOff()
         {
             _player.settings.mute = false;
-            toggleMutePlayer = false;
+            _stationsDTO.toggleMutePlayer = false;
             _messages.ClearMuteMessage();
-            if (getSong != "")
+            if (_stationsDTO.getSong != "")
             {
-                _messages.DisplayNowPlaying(getSong);
+                _messages.DisplayNowPlaying(_stationsDTO.getSong);
             }
             _messages.RenderAsciiMenu();
         }
@@ -117,10 +113,10 @@ namespace ConsoleMusicPlayer.Backend
             string fetchData = _fileFunctions.LoadSong(listChoice);
             if (fetchData != "")
             {
-                getSong = fetchData;
+                _stationsDTO.getSong = fetchData;
                 _player.settings.autoStart = false;
                 _player.URL = fetchData;
-                pathPresent = true;
+                _stationsDTO.pathPresent = true;
             }
         }
 
@@ -173,35 +169,35 @@ namespace ConsoleMusicPlayer.Backend
                 case 1:
                     _messages.ClearSongSelectOptions();
                     _messages.ClearDisplayMetaData();
-                    option = songs[0 + songListCycle * 5 - 5];
+                    option = songs[0 + _stationsDTO.songListCycle * 5 - 5];
                     RetrieveLoadData(option);
                     break;
 
                 case 2:
                     _messages.ClearSongSelectOptions();
                     _messages.ClearDisplayMetaData();
-                    option = songs[1 + songListCycle * 5 - 5];
+                    option = songs[1 + _stationsDTO.songListCycle * 5 - 5];
                     RetrieveLoadData(option);
                     break;
 
                 case 3:
                     _messages.ClearSongSelectOptions();
                     _messages.ClearDisplayMetaData();
-                    option = songs[2 + songListCycle * 5 - 5];
+                    option = songs[2 + _stationsDTO.songListCycle * 5 - 5];
                     RetrieveLoadData(option);
                     break;
 
                 case 4:
                     _messages.ClearSongSelectOptions();
                     _messages.ClearDisplayMetaData();
-                    option = songs[3 + songListCycle * 5 - 5];
+                    option = songs[3 + _stationsDTO.songListCycle * 5 - 5];
                     RetrieveLoadData(option);
                     break;
 
                 case 5:
                     _messages.ClearSongSelectOptions();
                     _messages.ClearDisplayMetaData();
-                    option = songs[4 + songListCycle * 5 - 5];
+                    option = songs[4 + _stationsDTO.songListCycle * 5 - 5];
                     RetrieveLoadData(option);
                     break;
 
@@ -214,15 +210,15 @@ namespace ConsoleMusicPlayer.Backend
 
         public void PrepareSongList(string[] getSongsFromMusicFolder)
         {
-            int currentIndex = songListCycle * 5;
+            int currentIndex = _stationsDTO.songListCycle * 5;
             int songListLength = getSongsFromMusicFolder.Length;
-            if (Math.Ceiling(songListLength / 5.0) <= songListCycle + 1)
+            if (Math.Ceiling(songListLength / 5.0) <= _stationsDTO.songListCycle + 1)
             {
-                songListCycle = 0;
-                currentIndex = songListCycle * 5;
+                _stationsDTO.songListCycle = 0;
+                currentIndex = _stationsDTO.songListCycle * 5;
             }
-            songListCycle += 1;
-            int itemsToRender = songListLength - songListCycle * 5 > 5 ? 5 : (songListLength - songListCycle * 5) % 5;
+            _stationsDTO.songListCycle += 1;
+            int itemsToRender = songListLength - _stationsDTO.songListCycle * 5 > 5 ? 5 : (songListLength - _stationsDTO.songListCycle * 5) % 5;
             int presentMusicFolderLength = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic).Length;
             _messages.RenderSongList(getSongsFromMusicFolder, itemsToRender, presentMusicFolderLength, currentIndex);
         }
@@ -232,7 +228,7 @@ namespace ConsoleMusicPlayer.Backend
             switch (choice)
             {
                 case (int)UserOptions.Play_Pause:
-                    if (pathPresent == true)
+                    if (_stationsDTO.pathPresent == true)
                     {
                         SetInitialVolume();
                         TogglePlayPause();
@@ -245,7 +241,7 @@ namespace ConsoleMusicPlayer.Backend
                     break;
 
                 case (int)UserOptions.Stop:
-                    pathPresent = false;
+                    _stationsDTO.pathPresent = false;
                     StopSong();
                     break;
 
@@ -253,10 +249,10 @@ namespace ConsoleMusicPlayer.Backend
                     _messages.RenderAsciiMenu((int)Enums.RenderControls.OptionsCount - 5);
                     RetrieveLoadData();
 
-                    if (getSong != "")
+                    if (_stationsDTO.getSong != "")
                     {
-                        toggleMutePlayer = false;
-                        toggleStatePlayer = false;
+                        _stationsDTO.toggleMutePlayer = false;
+                        _stationsDTO.toggleStatePlayer = false;
                     }
                     _messages.ClearLoadMessage();
                     _messages.RenderAsciiMenu();
@@ -269,10 +265,10 @@ namespace ConsoleMusicPlayer.Backend
                 case (int)UserOptions.LoadFromList:
                     _messages.RenderAsciiMenu((int)Enums.RenderControls.OptionsCount - 4);
                     SongPicker();
-                    if (getSong != "")
+                    if (_stationsDTO.getSong != "")
                     {
-                        toggleMutePlayer = false;
-                        toggleStatePlayer = false;
+                        _stationsDTO.toggleMutePlayer = false;
+                        _stationsDTO.toggleStatePlayer = false;
                     }
                     _messages.RenderAsciiMenu();
                     break;

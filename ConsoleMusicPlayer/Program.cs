@@ -11,7 +11,8 @@ WindowsMediaPlayer player = new WindowsMediaPlayer();
 EasterEgg visualizer = new EasterEgg();
 Messages messages = new Messages(colorCombo, asciiArt, position, visualizer);
 FileFunctions fileFunctions = new FileFunctions(messages);
-ConsoleMediaPlayer consoleMediaPlayer = new ConsoleMediaPlayer(player, messages, fileFunctions);
+StatesDTO statesDTO = new StatesDTO();
+ConsoleMediaPlayer consoleMediaPlayer = new ConsoleMediaPlayer(player, messages, fileFunctions, statesDTO);
 
 int choice = 0;
 bool choiceTest = false;

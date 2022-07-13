@@ -5,7 +5,7 @@
         private const int RENDERARRAY_Y = 28;
         private int RenderArray_X = Console.BufferWidth;
         private int offset = 5; //value to determing skew MIN 5 MAX 8
-        private int sleep = 2;
+        private int sleep = 5;
 
         public EasterEgg()
         {

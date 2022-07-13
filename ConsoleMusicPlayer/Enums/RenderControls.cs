@@ -2,7 +2,7 @@
 {
     internal enum RenderControls
     {
-        TitleLeftLimiter = 25,
+        TitleLeftLimiter = 10,
         TitleHeight = 4,
         OptionsVerticalPlacement = 20,
         OptionsCount = 7,
