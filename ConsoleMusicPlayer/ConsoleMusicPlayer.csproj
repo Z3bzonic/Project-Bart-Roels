@@ -8,9 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="obj\Debug\net6.0\.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" />
-    <Compile Include="obj\Debug\net6.0\ConsoleMusicPlayer.AssemblyInfo.cs" />
-    <Compile Include="obj\Debug\net6.0\ConsoleMusicPlayer.GlobalUsings.g.cs" />
+    <Compile Remove="bin\**" />
+    <Compile Remove="obj\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <EmbeddedResource Remove="obj\**" />
+    <None Remove="bin\**" />
+    <None Remove="obj\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,38 +26,6 @@
       <Isolated>false</Isolated>
       <EmbedInteropTypes>true</EmbedInteropTypes>
     </COMReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="bin\Debug\net6.0\ConsoleMusicPlayer.deps.json" />
-    <Content Include="bin\Debug\net6.0\ConsoleMusicPlayer.runtimeconfig.json" />
-    <Content Include="obj\ConsoleMusicPlayer.csproj.nuget.dgspec.json" />
-    <Content Include="obj\Debug\net6.0\ConsoleMusicPlayer.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\project.assets.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="bin\Debug\net6.0\ConsoleMusicPlayer.dll" />
-    <None Include="bin\Debug\net6.0\ConsoleMusicPlayer.exe" />
-    <None Include="bin\Debug\net6.0\ConsoleMusicPlayer.pdb" />
-    <None Include="obj\ConsoleMusicPlayer.csproj.nuget.g.props" />
-    <None Include="obj\ConsoleMusicPlayer.csproj.nuget.g.targets" />
-    <None Include="obj\Debug\net6.0\apphost.exe" />
-    <None Include="obj\Debug\net6.0\ConsoleMusicPlayer.AssemblyInfoInputs.cache" />
-    <None Include="obj\Debug\net6.0\ConsoleMusicPlayer.assets.cache" />
-    <None Include="obj\Debug\net6.0\ConsoleMusicPlayer.csproj.AssemblyReference.cache" />
-    <None Include="obj\Debug\net6.0\ConsoleMusicPlayer.csproj.BuildWithSkipAnalyzers" />
-    <None Include="obj\Debug\net6.0\ConsoleMusicPlayer.csproj.CoreCompileInputs.cache" />
-    <None Include="obj\Debug\net6.0\ConsoleMusicPlayer.csproj.ResolveComReference.cache" />
-    <None Include="obj\Debug\net6.0\ConsoleMusicPlayer.dll" />
-    <None Include="obj\Debug\net6.0\ConsoleMusicPlayer.GeneratedMSBuildEditorConfig.editorconfig" />
-    <None Include="obj\Debug\net6.0\ConsoleMusicPlayer.genruntimeconfig.cache" />
-    <None Include="obj\Debug\net6.0\ConsoleMusicPlayer.pdb" />
-    <None Include="obj\Debug\net6.0\Interop.WMPLib.dll" />
-    <None Include="obj\Debug\net6.0\refint\ConsoleMusicPlayer.dll" />
-    <None Include="obj\Debug\net6.0\ref\ConsoleMusicPlayer.dll" />
-    <None Include="obj\Debug\net6.0\_IsIncrementalBuild" />
-    <None Include="obj\project.nuget.cache" />
   </ItemGroup>
 
 </Project>
