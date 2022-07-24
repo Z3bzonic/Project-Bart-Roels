@@ -1,6 +1,8 @@
 ﻿using ConsoleMusicPlayer;
 using ConsoleMusicPlayer.Business;
+using ConsoleMusicPlayer.Common.Enums;
 using ConsoleMusicPlayer.Frontend;
+using System.Text;
 
 internal class Program
 {
@@ -12,30 +14,29 @@ internal class Program
             Console.ReadLine();
         }
 
-        Console.OutputEncoding = System.Text.Encoding.UTF8;
-        SetColorCombo colorCombo = new SetColorCombo();
-        AsciiArt asciiArt = new AsciiArt();
-        Positions position = new Positions();
-        EasterEgg visualizer = new EasterEgg();
-        Messages messages = new Messages(colorCombo, asciiArt, position, visualizer);
-        FileFunctions fileFunctions = new FileFunctions();
-        StatesDTO statesDTO = new StatesDTO();
-        ConsoleMediaPlayer consoleMediaPlayer = new ConsoleMediaPlayer(messages, fileFunctions, statesDTO);
+        Console.OutputEncoding = Encoding.UTF8;
+        var colorCombo = new SetColorCombo();
+        var asciiArt = new AsciiArt();
+        var position = new Positions();
+        var visualizer = new EasterEgg();
+        var messages = new Messages(colorCombo, asciiArt, position, visualizer);
+        var statesDTO = new StatesDTO();
+        var consoleMediaPlayer = new ConsoleMediaPlayer(messages, statesDTO);
 
-        int choice = 0;
-        bool choiceTest = false;
         messages.RenderTitle();
         messages.RenderAsciiMenu();
-        consoleMediaPlayer.PrepareSongList(fileFunctions.GetMusicFromFolder());
+        consoleMediaPlayer.PrepareSongList(FileFunctions.GetMusicFromFolder());
 
-        while (choice != 9)
+        UserOptions userOption = UserOptions.None;
+        while (userOption != UserOptions.Exit)
         {
             messages.DisplayMenuChoice();
-            choiceTest = int.TryParse(Console.ReadLine(), out choice);
-            if (choiceTest)
+            if (int.TryParse(Console.ReadLine(), out int choice))
             {
+                userOption = (UserOptions)choice;
+
                 messages.ClearNoFileLoadedMessage();
-                consoleMediaPlayer.ChoicePatchTrough(choice);
+                consoleMediaPlayer.ChoicePatchTrough(userOption);
             }
         }
     }
