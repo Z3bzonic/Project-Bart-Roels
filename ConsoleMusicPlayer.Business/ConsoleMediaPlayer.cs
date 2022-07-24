@@ -6,48 +6,42 @@ namespace ConsoleMusicPlayer.Business
 {
     public class ConsoleMediaPlayer
     {
-        private WindowsMediaPlayer _player;
-        private IMessages _messages;
-        private FileFunctions _fileFunctions;
-        private StatesDTO _stationsDTO;
+        private readonly WindowsMediaPlayer _player;
+        private readonly IMessages _messages;
+        private readonly StatesDTO _statesDTO;
 
-        public ConsoleMediaPlayer(IMessages messages, FileFunctions fileFunctions, StatesDTO stationsDTO)
+        public ConsoleMediaPlayer(IMessages messages, StatesDTO statesDTO)
         {
             _player = new WindowsMediaPlayer();
             _messages = messages;
-            _fileFunctions = fileFunctions;
-            _stationsDTO = stationsDTO;
+            _statesDTO = statesDTO;
         }
 
         private void TogglePlayPause()
         {
-            if (_stationsDTO.getSong != "")
+            if (!string.IsNullOrEmpty(_statesDTO.SongName))
             {
-                if (_stationsDTO.toggleStatePlayer == false)
-                {
-                    TogglePlay();
-                }
-                else
-                {
+                if (_statesDTO.ToggleStatePlayer)
                     TogglePause();
-                }
+                else
+                    TogglePlay();
             }
         }
 
         private void TogglePlay()
         {
             _player.controls.play();
-            _stationsDTO.toggleStatePlayer = true;
+            _statesDTO.ToggleStatePlayer = true;
             _messages.ClearPauseMessage();
-            _messages.DisplayNowPlaying(_stationsDTO.getSong);
+            _messages.DisplayNowPlaying(_statesDTO.SongName);
             _messages.RenderAsciiMenu(0);
         }
 
         private void TogglePause()
         {
             _player.controls.pause();
-            _stationsDTO.toggleStatePlayer = false;
-            _messages.DisplayNowPaused(_stationsDTO.getSong);
+            _statesDTO.ToggleStatePlayer = false;
+            _messages.DisplayNowPaused(_statesDTO.SongName);
             _messages.RenderAsciiMenu(-1);
         }
 
@@ -58,28 +52,28 @@ namespace ConsoleMusicPlayer.Business
             _messages.RenderAsciiMenu(1);
             Thread.Sleep(300);
             _messages.RenderAsciiMenu();
-            _stationsDTO.getSong = "";
+            _statesDTO.SongName = "";
         }
 
         private void SetInitialVolume()
         {
-            _messages.RenderVolumeBar(_stationsDTO.volume);
-            _player.settings.volume = _stationsDTO.volume;
+            _messages.RenderVolumeBar(_statesDTO.Volume);
+            _player.settings.volume = _statesDTO.Volume;
         }
 
         private void ChangeVolume()
         {
             _messages.RenderAsciiMenu((int)RenderControls.OptionsCount - 2);
-            _stationsDTO.volume = _messages.DisplayVolumeMenu();
-            _player.settings.volume = _stationsDTO.volume;
-            _messages.RenderVolumeBar(_stationsDTO.volume);
+            _statesDTO.Volume = _messages.DisplayVolumeMenu();
+            _player.settings.volume = _statesDTO.Volume;
+            _messages.RenderVolumeBar(_statesDTO.Volume);
             _messages.ClearVolumeMenu();
             _messages.RenderAsciiMenu();
         }
 
         private void MutePlayer()
         {
-            if (_stationsDTO.toggleMutePlayer == false)
+            if (_statesDTO.ToggleMutePlayer == false)
             {
                 ToggleMuteOn();
             }
@@ -92,7 +86,7 @@ namespace ConsoleMusicPlayer.Business
         private void ToggleMuteOn()
         {
             _player.settings.mute = true;
-            _stationsDTO.toggleMutePlayer = true;
+            _statesDTO.ToggleMutePlayer = true;
             _messages.DisplayNowMuted();
             _messages.RenderAsciiMenu((int)RenderControls.OptionsCount - 3);
         }
@@ -100,11 +94,11 @@ namespace ConsoleMusicPlayer.Business
         private void ToggleMuteOff()
         {
             _player.settings.mute = false;
-            _stationsDTO.toggleMutePlayer = false;
+            _statesDTO.ToggleMutePlayer = false;
             _messages.ClearMuteMessage();
-            if (_stationsDTO.getSong != "")
+            if (_statesDTO.SongName != "")
             {
-                _messages.DisplayNowPlaying(_stationsDTO.getSong);
+                _messages.DisplayNowPlaying(_statesDTO.SongName);
             }
             _messages.RenderAsciiMenu();
         }
@@ -117,8 +111,8 @@ namespace ConsoleMusicPlayer.Business
                 
                 var fileName = Console.ReadLine();
 
-                string fullPath = _fileFunctions.GetFullFilePath(fileName);
-                bool exists = _fileFunctions.FileExists(fileName);
+                string fullPath = FileFunctions.GetFullFilePath(fileName);
+                bool exists = FileFunctions.FileExists(fileName);
                 fullPath = exists ? fullPath : LoadSong();
             }
             return loadedSong;
@@ -130,17 +124,17 @@ namespace ConsoleMusicPlayer.Business
             string fetchData = LoadSong(listChoice);
             if (fetchData != "")
             {
-                _stationsDTO.getSong = fetchData;
+                _statesDTO.SongName = fetchData;
                 _player.settings.autoStart = false;
                 _player.URL = fetchData;
-                _stationsDTO.pathPresent = true;
+                _statesDTO.PathPresent = true;
             }
         }
 
         private void IncreaseCycleDisplay()
         {
             _messages.ResetRenderSongList();
-            PrepareSongList(_fileFunctions.GetMusicFromFolder());
+            PrepareSongList(FileFunctions.GetMusicFromFolder());
         }
 
         private void RetrieveMetaData(IWMPMedia media)
@@ -166,17 +160,14 @@ namespace ConsoleMusicPlayer.Business
 
         private void SongPicker()
         {
-            string[] songs = _fileFunctions.GetMusicFromFolder();
+            var songs = FileFunctions.GetMusicFromFolder();
             _messages.DisplaySongSelect();
             Console.SetCursorPosition(84, 14);
-            int choice = -1;
-            bool testChoice = int.TryParse(Console.ReadLine(), out choice);
-            if (testChoice == false)
-            {
-                choice -= 1;
-            }
 
-            string option = "";
+            if (!int.TryParse(Console.ReadLine(), out int choice))
+                choice -= 1;
+
+            string option;
             switch (choice)
             {
                 case 0:
@@ -186,35 +177,35 @@ namespace ConsoleMusicPlayer.Business
                 case 1:
                     _messages.ClearSongSelectOptions();
                     _messages.ClearDisplayMetaData();
-                    option = songs[0 + _stationsDTO.songListCycle * 5 - 5];
+                    option = songs[0 + _statesDTO.SongListCycle * 5 - 5];
                     RetrieveLoadData(option);
                     break;
 
                 case 2:
                     _messages.ClearSongSelectOptions();
                     _messages.ClearDisplayMetaData();
-                    option = songs[1 + _stationsDTO.songListCycle * 5 - 5];
+                    option = songs[1 + _statesDTO.SongListCycle * 5 - 5];
                     RetrieveLoadData(option);
                     break;
 
                 case 3:
                     _messages.ClearSongSelectOptions();
                     _messages.ClearDisplayMetaData();
-                    option = songs[2 + _stationsDTO.songListCycle * 5 - 5];
+                    option = songs[2 + _statesDTO.SongListCycle * 5 - 5];
                     RetrieveLoadData(option);
                     break;
 
                 case 4:
                     _messages.ClearSongSelectOptions();
                     _messages.ClearDisplayMetaData();
-                    option = songs[3 + _stationsDTO.songListCycle * 5 - 5];
+                    option = songs[3 + _statesDTO.SongListCycle * 5 - 5];
                     RetrieveLoadData(option);
                     break;
 
                 case 5:
                     _messages.ClearSongSelectOptions();
                     _messages.ClearDisplayMetaData();
-                    option = songs[4 + _stationsDTO.songListCycle * 5 - 5];
+                    option = songs[4 + _statesDTO.SongListCycle * 5 - 5];
                     RetrieveLoadData(option);
                     break;
 
@@ -227,25 +218,77 @@ namespace ConsoleMusicPlayer.Business
 
         public void PrepareSongList(string[] getSongsFromMusicFolder)
         {
-            int currentIndex = _stationsDTO.songListCycle * 5;
+            int currentIndex = _statesDTO.SongListCycle * 5;
             int songListLength = getSongsFromMusicFolder.Length;
-            if (Math.Ceiling(songListLength / 5.0) <= _stationsDTO.songListCycle + 1)
+            if (Math.Ceiling(songListLength / 5.0) <= _statesDTO.SongListCycle + 1)
             {
-                _stationsDTO.songListCycle = 0;
-                currentIndex = _stationsDTO.songListCycle * 5;
+                _statesDTO.SongListCycle = 0;
+                currentIndex = _statesDTO.SongListCycle * 5;
             }
-            _stationsDTO.songListCycle += 1;
-            int itemsToRender = songListLength - _stationsDTO.songListCycle * 5 > 5 ? 5 : (songListLength - _stationsDTO.songListCycle * 5) % 5;
+            _statesDTO.SongListCycle++;
+            int itemsToRender = songListLength - _statesDTO.SongListCycle * 5 > 5 ? 5 : (songListLength - _statesDTO.SongListCycle * 5) % 5;
             int presentMusicFolderLength = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic).Length;
             _messages.RenderSongList(getSongsFromMusicFolder, itemsToRender, presentMusicFolderLength, currentIndex);
         }
 
-        public void ChoicePatchTrough(int choice)
+        public void ChoicePatchTrough(UserOptions userOption)
         {
-            switch (choice)
+            //switch (userOption)
+            //{
+            //    case UserOptions.None:
+            //        break;
+            //    case UserOptions.Play_Pause:
+            //        break;
+            //    case UserOptions.Stop:
+            //        break;
+            //    case UserOptions.Load:
+            //        break;
+            //    case UserOptions.Mute_Unmute:
+            //        break;
+            //    case UserOptions.LoadFromList:
+            //        break;
+            //    case UserOptions.Volume:
+            //        break;
+            //    case UserOptions.Exit:
+            //        break;
+            //    case UserOptions.Visualizer:
+            //        break;
+            //    default:
+            //        throw new ArgumentOutOfRangeException(nameof(choice));
+            //}
+
+            //try
+            //{
+            //    //enter fileename
+
+            //    //file exists?
+            //    throw new BusinessException();
+
+            //    //open file
+
+            //    //play file
+            //    //WMP
+                
+            //}
+            //catch (BusinessException ex)
+            //{
+            //    //log exception
+            //    throw;
+            //}
+            //catch (Exception ex)
+            //{
+            //    //log exception
+            //    throw;
+            //}
+            //finally
+            //{
+            //    //dispose WMP lib
+            //}
+
+            switch (userOption)
             {
-                case (int)UserOptions.Play_Pause:
-                    if (_stationsDTO.pathPresent == true)
+                case UserOptions.Play_Pause:
+                    if (_statesDTO.PathPresent)
                     {
                         SetInitialVolume();
                         TogglePlayPause();
@@ -256,58 +299,54 @@ namespace ConsoleMusicPlayer.Business
                         _messages.DisplayLoadingError();
                     }
                     break;
-
-                case (int)UserOptions.Stop:
-                    _stationsDTO.pathPresent = false;
+                case UserOptions.Stop:
+                    _statesDTO.PathPresent = false;
                     StopSong();
                     break;
-
-                case (int)UserOptions.Load:
+                case UserOptions.Load:
                     _messages.RenderAsciiMenu((int)RenderControls.OptionsCount - 5);
                     RetrieveLoadData();
 
-                    if (_stationsDTO.getSong != "")
+                    if (!string.IsNullOrEmpty(_statesDTO.SongName))
                     {
-                        _stationsDTO.toggleMutePlayer = false;
-                        _stationsDTO.toggleStatePlayer = false;
+                        _statesDTO.ToggleMutePlayer = false;
+                        _statesDTO.ToggleStatePlayer = false;
                     }
                     _messages.ClearLoadMessage();
                     _messages.RenderAsciiMenu();
                     break;
-
-                case (int)UserOptions.Mute_Unmute:
+                case UserOptions.Mute_Unmute:
                     MutePlayer();
                     break;
-
-                case (int)UserOptions.LoadFromList:
+                case UserOptions.LoadFromList:
                     _messages.RenderAsciiMenu((int)RenderControls.OptionsCount - 4);
                     SongPicker();
-                    if (_stationsDTO.getSong != "")
+                    if (!string.IsNullOrEmpty(_statesDTO.SongName))
                     {
-                        _stationsDTO.toggleMutePlayer = false;
-                        _stationsDTO.toggleStatePlayer = false;
+                        _statesDTO.ToggleMutePlayer = false;
+                        _statesDTO.ToggleStatePlayer = false;
                     }
                     _messages.RenderAsciiMenu();
                     break;
-
-                case (int)UserOptions.Volume:
+                case UserOptions.Volume:
                     ChangeVolume();
                     _messages.ClearVolumeMenu();
                     break;
-
-                case (int)UserOptions.Visualizer: //Easteregg option 8 : Do not run while sensitive to rapid changing colors / epilepsy
+                case UserOptions.Visualizer: //Easteregg option 8 : Do not run while sensitive to rapid changing colors / epilepsy
                     _messages.RenderVisualArt();
                     _messages.RenderTitle();
                     _messages.RenderAsciiMenu();
-                    PrepareSongList(_fileFunctions.GetMusicFromFolder());
+                    PrepareSongList(FileFunctions.GetMusicFromFolder());
                     break;
-
-                case (int)UserOptions.Exit:
+                case UserOptions.Exit:
                     return;
-
                 default:
                     break;
             }
         }
+    }
+
+    public class BusinessException : Exception
+    {
     }
 }
