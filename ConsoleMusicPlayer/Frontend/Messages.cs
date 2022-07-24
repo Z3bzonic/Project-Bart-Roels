@@ -1,9 +1,9 @@
-﻿using ConsoleMusicPlayer.Backend;
-using ConsoleMusicPlayer.Enums;
+﻿using ConsoleMusicPlayer.Common.Enums;
+using ConsoleMusicPlayer.Common.Interfaces;
 
 namespace ConsoleMusicPlayer.Frontend
 {
-    internal class Messages
+    internal class Messages : IMessages
     {
         private SetColorCombo _colorContrast;
         private AsciiArt _asciiArt;
